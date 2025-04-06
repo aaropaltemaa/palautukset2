@@ -19,7 +19,7 @@ const App = () => {
 
   const handleNextAnecdote = () => {
     setSelected(Math.floor(Math.random() * anecdotes.length) + 0)
-  }
+  }  
 
   const handleVote = () => {
     const copy = [...votes]
