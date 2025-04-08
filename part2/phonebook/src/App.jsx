@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-import axios from 'axios'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -10,31 +10,52 @@ const App = () => {
   const [filtered, setFiltered] = useState('')
 
   useEffect(() => {
-    console.log("effect")
-    axios
-      .get('http://localhost:3001/persons')
-      .then(res => {
-        console.log("promise fulfilled")
-        setPersons(res.data)
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
-  console.log("render", persons.length, "persons")
 
+
+
+  const updateNumber = (id) => {
+    const person = persons.find(p => p.id === id)
+    const changedPerson = { ...person, number: newNumber }
+
+    personService
+      .update(id, changedPerson)
+      .then((returnedPerson) => {
+        setPersons(persons.map((person) => (person.id !== id ? person : returnedPerson)))
+      })
+  }
 
   const addPerson = (event) => {
     event.preventDefault()
+
+    //Check if the name already exists
+    const existingPerson = persons.find(p => p.name === newName)
+
     const personObject = {
       name: newName,
-      number: newNumber,
-      id: String(persons.length + 1)
+      number: newNumber
     }
 
-    if (persons.some(person => person.name === newName)) {
+    if (existingPerson) {
       alert(`${newName} is already added to phonebook`)
+
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`))
+        updateNumber(existingPerson.id)
+
     } else {
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('')
+      personService
+        .create(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+
     }
   }
 
@@ -54,6 +75,21 @@ const App = () => {
     person.name.toLowerCase().includes(filtered.toLowerCase())
   )
 
+  const deletePersonOf = (id) => {
+    const person = persons.find(p => p.id === id)
+
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter(p => p.id !== id))
+        })
+        .catch(error => {
+          alert(`The person "${person.name}" was already removed from server`)
+          setPersons(persons.filter(p => p.id !== id))
+        })
+    }
+  }
   return (
     <div>
       <h2>Phonebook</h2>
@@ -74,6 +110,7 @@ const App = () => {
       <h3>Numbers</h3>
       <Persons
         filteredPersons={filteredPersons}
+        deletePerson={deletePersonOf}
       />
     </div>
   )
