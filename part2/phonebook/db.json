@@ -1,44 +1,9 @@
 {
   "persons": [
     {
-      "name": "Mary Poppendieck",
-      "number": "25252523",
-      "id": "4"
-    },
-    {
       "id": "a944",
       "name": "test",
-      "number": "2222"
-    },
-    {
-      "id": "0cb6",
-      "name": "arto hellas",
-      "number": "2222"
-    },
-    {
-      "id": "9d59",
-      "name": "testtet",
-      "number": "2222"
-    },
-    {
-      "id": "89fd",
-      "name": "Test",
-      "number": "2222"
-    },
-    {
-      "id": "eee5",
-      "name": "wofewjfwjefo",
-      "number": "202092582022"
-    },
-    {
-      "id": "34ad",
-      "name": "2234234",
-      "number": "3r32r32"
-    },
-    {
-      "id": "025a",
-      "name": "aafsadfasd",
-      "number": "242242"
+      "number": "2525234"
     }
   ]
 }
