@@ -16,6 +16,10 @@ app.use(
   )
 );
 
+app.get("/", (request, response) => {
+  response.send("<h1> Welcome to the phonebook API!</h1>");
+});
+
 let persons = [
   {
     id: "1",
