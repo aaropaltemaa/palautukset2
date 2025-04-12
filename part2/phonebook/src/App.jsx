@@ -29,6 +29,8 @@ const App = () => {
         setPersons(persons.map((person) =>
           person.id !== id ? person : returnedPerson
         ))
+        setNewName('')
+        setNewNumber('')
         setSuccessMessage(`The number of ${person.name} was successfully changed`)
         setTimeout(() => setSuccessMessage(null), 5000)
       })
@@ -63,6 +65,10 @@ const App = () => {
           setNewNumber('')
           setSuccessMessage(`Added ${returnedPerson.name}`)
           setTimeout(() => setSuccessMessage(null), 5000)
+        })
+        .catch(error => {
+          setErrorMessage(error.response.data.error)
+          setTimeout(() => setErrorMessage(null), 5000)
         })
     }
   }
