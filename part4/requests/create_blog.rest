@@ -1,9 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFwYWx0ZW1hYSIsImlkIjoiNjgwMTM2NDAwYTZmYzkwYzgyYjdhZjMzIiwiaWF0IjoxNzQ0OTgwNDQ2LCJleHAiOjE3NDQ5ODQwNDZ9.TwoqkAemIOFFveTStDhWD73lT2V9WyUz-nS65tEFagE
 
 {
-    "title": "Third blog entry",
-    "author": "W2S",
-    "url": "example3.com",
-    "likes": 164
+    "title": "test title",
+    "author": "test author",
+    "url": "test url",
+    "likes": 24
 }
