@@ -56,11 +56,12 @@ blogsRouter.delete("/:id", userExtractor, async (request, response) => {
 });
 
 blogsRouter.put("/:id", async (request, response) => {
-  const { likes } = request.body;
+  const blogToUpdate = await Blog.findById(request.params.id);
+  const updatedLikes = blogToUpdate.likes + 1;
 
   const updatedBlog = await Blog.findByIdAndUpdate(
     request.params.id,
-    { likes },
+    { likes: updatedLikes },
     { new: true, runValidators: true }
   );
 
