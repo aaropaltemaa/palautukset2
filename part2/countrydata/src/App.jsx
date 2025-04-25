@@ -1,23 +1,29 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const Filter = ({ country, countries }) => {
+
+  return (
+    <div>
+      <h1>{country}</h1>
+    </div>
+  )
+}
+
+
 const App = () => {
   const [country, setCountry] = useState("")
   const [countries, setCountries] = useState([])
 
   useEffect(() => {
-    console.log("effect run, country is now", country)
-
     if (country) {
-      console.log("fetching country data...")
       axios
         .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${country}`)
         .then(response => {
-          console.log(`Data of ${country} was fetched successfully`)
-          setCountry(response.data.name.common)
+          setCountries(response.data)
         })
         .catch(error => {
-          console.log(`Failed to fetch data of ${country}`)
+          console.log("error fetching countries:", error)
         })
     }
   }, [country])
@@ -28,12 +34,14 @@ const App = () => {
 
   return (
     <div>
-      find countries
       <input
         value={country}
         onChange={handleChange}
+        placeholder='Search for a country'
       />
-      <p>{country}</p>
+      <pre>
+        <Filter country={country} />
+      </pre>
     </div>
   )
 }
